@@ -1,15 +1,17 @@
 package com.workout.workoutlog.controller.dto;
 
+import com.workout.workoutlog.model.Activity;
+
 import java.util.Date;
 
 public class WorkoutDto {
 
     private long id;
-    private String activity;
+    private Activity activity;
     private Date date;
     private float spentTime;
 
-    public WorkoutDto(long id, String activity, Date date, float spentTime) {
+    public WorkoutDto(long id, Activity activity, Date date, float spentTime) {
         this.id = id;
         this.activity = activity;
         this.date = date;
@@ -20,7 +22,7 @@ public class WorkoutDto {
         return id;
     }
 
-    public String getActivity() {
+    public Activity getActivity() {
         return activity;
     }
 
