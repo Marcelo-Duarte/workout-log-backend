@@ -1,22 +1,36 @@
 package com.workout.workoutlog.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "TB_WORKOUT")
 public class Workout {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String activity;
+
+    @ManyToOne
+    @JoinColumn(name = "ACTIVITY_ID")
+    private Activity activity;
     private Date date;
     private float spentTime;
 
-    public String getActivity() {
+    public Workout(Activity activity, Date date, float spentTime) {
+        this.activity = activity;
+        this.date = date;
+        this.spentTime = spentTime;
+    }
+
+    public Workout() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public Activity getActivity() {
         return activity;
     }
 
