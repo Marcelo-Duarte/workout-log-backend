@@ -25,10 +25,8 @@ public class ActivityService {
     }
 
     public ActivityDto getOne(long id) {
-        Optional<Activity> activityOptional = activityRepository.findById(id);
-
-        if(activityOptional.isPresent()) {
-            return toDto(activityOptional.get());
+        if(activityRepository.findById(id).isPresent()) {
+            return toDto(activityRepository.findById(id).get());
         }
 
         return null;
