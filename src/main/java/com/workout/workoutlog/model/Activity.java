@@ -11,6 +11,13 @@ public class Activity {
     private long id;
     private String name;
 
+    public Activity(String name) {
+        this.name = name;
+    }
+
+    public Activity() {
+    }
+
     public long getId() {
         return id;
     }
