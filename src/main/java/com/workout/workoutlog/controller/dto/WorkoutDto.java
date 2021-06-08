@@ -33,4 +33,8 @@ public class WorkoutDto {
     public float getSpentTime() {
         return spentTime;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }
