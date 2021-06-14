@@ -1,13 +1,13 @@
 package com.workout.workoutlog.service;
 
-import com.workout.workoutlog.controller.dto.WorkoutDto;
+import com.workout.workoutlog.controller.dto.ResponseWorkoutDto;
 import com.workout.workoutlog.model.Workout;
 import com.workout.workoutlog.repository.WorkoutRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,15 +16,21 @@ public class WorkoutService {
     @Autowired
     private WorkoutRepository workoutRepository;
 
-    public WorkoutDto save(WorkoutDto workoutDto) {
-        return toDto(workoutRepository.save(toEntity(workoutDto)));
+    @Autowired
+    private ActivityService activityService;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public ResponseWorkoutDto save(ResponseWorkoutDto responseWorkoutDto) {
+        return toDto(workoutRepository.save(toEntity(responseWorkoutDto)));
     }
 
-    public List<WorkoutDto> getAll() {
+    public List<ResponseWorkoutDto> getAll() {
         return workoutRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
     }
 
-    public WorkoutDto getOne(long id) {
+    public ResponseWorkoutDto getOne(long id) {
         if(workoutRepository.findById(id).isPresent()) {
             return toDto(workoutRepository.findById(id).get());
         }
@@ -38,11 +44,13 @@ public class WorkoutService {
         }
     }
 
-    private Workout toEntity(WorkoutDto workoutDto) {
-        return new Workout(workoutDto.getActivity(), workoutDto.getDate(), workoutDto.getSpentTime());
+    protected Workout toEntity(ResponseWorkoutDto responseWorkoutDto) {
+//        return new Workout(activityService.toEntity(workoutDto.getActivityDto()), workoutDto.getDate(), workoutDto.getSpentTime());
+        return modelMapper.map(responseWorkoutDto, Workout.class);
     }
 
-    private WorkoutDto toDto(Workout workout) {
-        return new WorkoutDto(workout.getId(), workout.getActivity(), workout.getDate(), workout.getSpentTime());
+    protected ResponseWorkoutDto toDto(Workout workout) {
+        //        return new WorkoutDto(workout.getId(), activityService.toDto(workout.getActivity()), workout.getDate(), workout.getSpentTime());
+        return modelMapper.map(workout, ResponseWorkoutDto.class);
     }
 }

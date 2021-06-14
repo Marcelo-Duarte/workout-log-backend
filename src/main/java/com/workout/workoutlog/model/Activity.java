@@ -1,28 +1,22 @@
 package com.workout.workoutlog.model;
 
+import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "TB_ACTIVITY")
+@Getter
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class Activity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(nullable = false)
+    @Setter
+    @NonNull
     private String name;
-
-    public Activity(String name) {
-        this.name = name;
-    }
-
-    public Activity() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
 }
