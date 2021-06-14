@@ -1,10 +1,18 @@
 package com.workout.workoutlog.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "TB_WORKOUT")
+@Getter
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class Workout {
 
     @Id
@@ -12,33 +20,15 @@ public class Workout {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "ACTIVITY_ID")
+    @JoinColumn(name = "ACTIVITY", nullable = false)
+    @NonNull
     private Activity activity;
+
+    @Column(nullable = false)
+    @NonNull
     private Date date;
+
+    @Column(nullable = false)
+    @NonNull
     private float spentTime;
-
-    public Workout(Activity activity, Date date, float spentTime) {
-        this.activity = activity;
-        this.date = date;
-        this.spentTime = spentTime;
-    }
-
-    public Workout() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public Activity getActivity() {
-        return activity;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public float getSpentTime() {
-        return spentTime;
-    }
 }
